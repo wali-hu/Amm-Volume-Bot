@@ -1,79 +1,56 @@
-import {
-  ApiV3PoolInfoStandardItem,
-  TokenAmount,
-  toToken,
-  Percent,
-  AmmV4Keys,
-  AmmV5Keys,
-  printSimulate,
-} from '@raydium-io/raydium-sdk-v2'
 import { initSdk, txVersion } from '../config'
-import { isValidAmm } from './utils'
-import Decimal from 'decimal.js'
 import BN from 'bn.js'
-import { PublicKey } from '@solana/web3.js'
 
 export const addLiquidity = async () => {
+  console.log('Adding Liquidity to Pool...')
+  
   const raydium = await initSdk()
-
-  // RAY-USDC pool
-  const poolId = '6UmmUiYoBjSrhakAobJw8BvkmJtDVxaeBtbt7rxWo1mg'
-  let poolKeys: AmmV4Keys | AmmV5Keys | undefined
-  let poolInfo: ApiV3PoolInfoStandardItem
-
-  if (raydium.cluster === 'mainnet') {
+  
+  // Pool ID from previous creation
+  const poolId = 'D869DJYsXgyQrBCoc8CEfehwc7jy7MRCKog4L4RA637E'
+  
+  console.log('Pool ID:', poolId)
+  
+  try {
+    // Get pool info first
     const data = await raydium.api.fetchPoolById({ ids: poolId })
-    poolInfo = data[0] as ApiV3PoolInfoStandardItem
-  } else {
-    // note: getPoolInfoFromRpc method only return required pool data for computing not all detail pool info
-    const data = await raydium.liquidity.getPoolInfoFromRpc({ poolId })
-    poolInfo = data.poolInfo
-    poolKeys = data.poolKeys
+    const poolInfo = data[0]
+    
+    if (!poolInfo) {
+      throw new Error('Pool not found')
+    }
+    
+    console.log('Pool found:', poolInfo.id)
+    
+    // Add liquidity amounts (smaller amounts)
+    const baseAmount = new BN(500000000) // 0.5 SOL
+    const quoteAmount = new BN(500000000) // 500 tokens
+    
+    console.log('Adding liquidity amounts:')
+    console.log('Base (SOL):', baseAmount.div(new BN(10**9)).toString())
+    console.log('Quote (Token):', quoteAmount.div(new BN(10**6)).toString())
+    
+    // Use liquidity module
+    const { execute } = await raydium.liquidity.addLiquidity({
+      poolInfo,
+      amountInA: baseAmount,
+      amountInB: quoteAmount,
+      fixedSide: 'a',
+      txVersion,
+    })
+    
+    console.log('Executing transaction...')
+    const { txId } = await execute({ sendAndConfirm: true })
+    
+    console.log('SUCCESS!')
+    console.log('Transaction ID:', txId)
+    
+    return txId
+    
+  } catch (error) {
+    console.error('Failed:', error)
+    throw error
   }
-
-  if (!isValidAmm(poolInfo.programId)) throw new Error('target pool is not AMM pool')
-
-  const inputAmount = '1'
-
-  const r = raydium.liquidity.computePairAmount({
-    poolInfo,
-    amount: inputAmount,
-    baseIn: true,
-    slippage: new Percent(1, 100), // 1%
-  })
-
-  const { execute, transaction } = await raydium.liquidity.addLiquidity({
-    poolInfo,
-    poolKeys,
-    amountInA: new TokenAmount(
-      toToken(poolInfo.mintA),
-      new Decimal(inputAmount).mul(10 ** poolInfo.mintA.decimals).toFixed(0)
-    ),
-    amountInB: new TokenAmount(
-      toToken(poolInfo.mintB),
-      new Decimal(r.maxAnotherAmount.toExact()).mul(10 ** poolInfo.mintB.decimals).toFixed(0)
-    ),
-    otherAmountMin: r.minAnotherAmount,
-    fixedSide: 'a',
-    txVersion,
-    // optional: set up priority fee here
-    // computeBudgetConfig: {
-    //   units: 600000,
-    //   microLamports: 46591500,
-    // },
-
-    // optional: add transfer sol to tip account instruction. e.g sent tip to jito
-    // txTipConfig: {
-    //   address: new PublicKey('96gYZGLnJYVFmbjzopPSU6QiEV5fGqZNyN9nmNhvrZU5'),
-    //   amount: new BN(10000000), // 0.01 sol
-    // },
-  })
-
-  // don't want to wait confirm, set sendAndConfirm to false or don't pass any params to execute
-  const { txId } = await execute({ sendAndConfirm: true })
-  console.log('liquidity added:', { txId: `https://explorer.solana.com/tx/${txId}` })
-  process.exit() // if you don't want to end up node execution, comment this line
 }
 
-/** uncomment code below to execute */
-// addLiquidity()
+addLiquidity().catch(console.error)

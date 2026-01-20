@@ -101,7 +101,7 @@ Market Creation:
 5ucyAL2vNQXQ78nKPUaZVM6c6AQQth8pwuCytoDRHNSAxYoFYLDZCB565voczPfAN33ULsGKoT7Qf3mUUZjKaf3u |
 
 ## 🚀 Next Steps Available
-1. Swap Testing: Use Raydium UI or Jupiter with pool ID
+1. Swap Testing
 2. Additional Liquidity: Add more liquidity using SDK
 3. Trading: Pool is live and ready for SOL ↔ Custom Token swaps
 4. Monitoring: Track pool performance and volume

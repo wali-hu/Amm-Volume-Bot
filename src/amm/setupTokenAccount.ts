@@ -11,7 +11,7 @@ export const setupTokenAccount = async () => {
   console.log('🔧 Setting up token account...')
   
   // New custom token from market creation
-  const customToken = new PublicKey('7zHwuUSTXGwi4Kdq4D3Gz2oeUjfmCDsqc5rqh1ZKXywQ')
+  const customToken = new PublicKey('8XG9JQF5ajQB3DXC2ANMJyo9QBzSovwEorH9EeRzzCgo')
   
   try {
     console.log('📍 Token mint:', customToken.toString())
@@ -35,12 +35,14 @@ export const setupTokenAccount = async () => {
     
     // Mint tokens to the account (increase amount for pool)
     const mintAmount = 10000 * 10 ** 6 // 10,000 tokens with 6 decimals
+    
+    console.log('Creating token account...')
     const mintTx = await mintTo(
       connection,
       owner, // payer
       customToken, // mint
       tokenAccount.address, // destination
-      owner, // mint authority
+      owner, // mint authority (wallet is the authority)
       mintAmount
     )
     

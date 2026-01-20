@@ -8,7 +8,7 @@ import BN from 'bn.js'
 
 export const createAmmPoolFinal = async () => {
   const raydium = await initSdk()
-  const marketId = new PublicKey('J6WDEkge8i4Nir99odM2wkC86AquYHBgmcqqUVPVV8wc') // New market
+  const marketId = new PublicKey('qNETQX7roK2UgPNn3K49hffT6b4rfrAnowqMUHqWUm5') // New market
 
   const marketBufferInfo = await raydium.connection.getAccountInfo(marketId)
   const { baseMint, quoteMint } = MARKET_STATE_LAYOUT_V3.decode(marketBufferInfo!.data)

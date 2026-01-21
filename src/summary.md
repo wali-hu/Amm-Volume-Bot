@@ -1,10 +1,10 @@
  # Raydium SDK V2 - Complete Project Summary
 
-## 🎯 Project Goal
+##  Project Goal
 Create a complete AMM pool on Raydium devnet using SDK V2 with market creation, token minting, pool creation, and 
 liquidity addition.
 
-## 📋 Project Timeline & Results
+##  Project Timeline & Results
 
 ### 1. Initial Setup ✅
 - **Wallet Address**: 8oqK9tb7QREwG9w3JRZuvWvaS9K7YBtyY2eeCBVEQXmV
@@ -41,7 +41,7 @@ Market Creation:
 - **Initial Liquidity**: 5 SOL + 5,000 tokens
 - **Transaction Hash**: 5ucyAL2vNQXQ78nKPUaZVM6c6AQQth8pwuCytoDRHNSAxYoFYLDZCB565voczPfAN33ULsGKoT7Qf3mUUZjKaf3u
 
-## 📊 Final Pool Status
+##  Final Pool Status
 
 ### Pool Information
 - **Pool ID**: DdsMQzVueB5L7Rn5hMkzSz2BFCnQyVXbnA5cMUimT92C
@@ -57,7 +57,7 @@ Market Creation:
 - **Base Decimals**: 9
 - **Quote Decimals**: 6
 
-## 🔧 Technical Implementation
+##  Technical Implementation
 
 ### Working Scripts
 1. src/config.ts - SDK configuration and wallet setup
@@ -74,7 +74,7 @@ Market Creation:
 - **Compute Budget**: 600,000 units
 - **Micro Lamports**: 100,000,000
 
-## 🎉 Final Results
+##  Final Results
 
 ### ✅ Successfully Completed
 1. Market Creation: OpenBook market with custom token pair
@@ -82,12 +82,12 @@ Market Creation:
 3. Pool Creation: AMM pool with sufficient liquidity
 4. Pool Verification: Confirmed TVL and liquidity availability
 
-### 📈 Pool Metrics
+###  Pool Metrics
 - **Total Value Locked**: $1,456.41
 - **Liquidity Providers**: 1 (creator)
 - **Ready for Trading**: ✅ Yes
 
-### 🔗 Important Addresses Summary
+###  Important Addresses Summary
 | Component | Address/ID | Transaction Hash |
 |-----------|------------|------------------|
 | Wallet | 8oqK9tb7QREwG9w3JRZuvWvaS9K7YBtyY2eeCBVEQXmV | - |
@@ -100,13 +100,13 @@ Market Creation:
 | AMM Pool | DdsMQzVueB5L7Rn5hMkzSz2BFCnQyVXbnA5cMUimT92C | 
 5ucyAL2vNQXQ78nKPUaZVM6c6AQQth8pwuCytoDRHNSAxYoFYLDZCB565voczPfAN33ULsGKoT7Qf3mUUZjKaf3u |
 
-## 🚀 Next Steps Available
+##  Next Steps Available
 1. Swap Testing
 2. Additional Liquidity: Add more liquidity using SDK
 3. Trading: Pool is live and ready for SOL ↔ Custom Token swaps
 4. Monitoring: Track pool performance and volume
 
-## 🏆 Project Status: COMPLETE SUCCESS ✅
+##  Project Status: COMPLETE SUCCESS ✅
 
 The project successfully created a fully functional AMM pool on Raydium devnet with:
 - ✅ Custom token creation

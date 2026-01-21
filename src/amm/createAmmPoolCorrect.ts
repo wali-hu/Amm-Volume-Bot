@@ -50,8 +50,8 @@ export const createAmmPoolFinal = async () => {
   })
 
   const { txId } = await execute({ sendAndConfirm: true })
-  console.log('🎉 AMM pool created! txId:', txId)
-  console.log('💰 Pool ID:', extInfo.address.ammId.toBase58())
+  console.log(' AMM pool created! txId:', txId)
+  console.log(' Pool ID:', extInfo.address.ammId.toBase58())
   
   return {
     poolId: extInfo.address.ammId.toBase58(),
@@ -61,10 +61,10 @@ export const createAmmPoolFinal = async () => {
 
 createAmmPoolFinal()
   .then((result) => {
-    console.log('\n🏁 SUCCESS!')
+    console.log('\n SUCCESS!')
     console.log('Pool ID:', result.poolId)
     console.log('Transaction Hash:', result.txHash)
   })
   .catch((error) => {
-    console.error('❌ Failed:', error)
+    console.error(' Failed:', error)
   })

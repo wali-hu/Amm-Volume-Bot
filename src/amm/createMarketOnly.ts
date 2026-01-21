@@ -9,13 +9,13 @@ import {
 import { initSdk, txVersion, owner, connection } from '../config'
 
 export const createMarketOnly = async () => {
-  console.log('🚀 Creating Market on Devnet...')
+  console.log(' Creating Market on Devnet...')
   console.log('Wallet:', owner.publicKey.toBase58())
   
   const raydium = await initSdk()
 
   // Step 1: Create a simple token
-  console.log('🪙 Creating custom token...')
+  console.log(' Creating custom token...')
   const customMint = await createMint(
     connection,
     owner,
@@ -24,10 +24,10 @@ export const createMarketOnly = async () => {
     6 // 6 decimals
   )
   
-  console.log('✅ Custom token created:', customMint.toBase58())
+  console.log(' Custom token created:', customMint.toBase58())
 
   // Step 2: Create market
-  console.log('📊 Creating market...')
+  console.log(' Creating market...')
   try {
     const { execute, extInfo } = await raydium.marketV2.create({
       baseInfo: {
@@ -49,10 +49,10 @@ export const createMarketOnly = async () => {
     })
 
     const txIds = await execute({ sequentially: true })
-    console.log('✅ Market created successfully!')
-    console.log('📍 Market ID:', extInfo.address.marketId.toBase58())
-    console.log('🔗 Transaction Hashes:', txIds)
-    console.log('🪙 Custom Token:', customMint.toBase58())
+    console.log(' Market created successfully!')
+    console.log(' Market ID:', extInfo.address.marketId.toBase58())
+    console.log(' Transaction Hashes:', txIds)
+    console.log(' Custom Token:', customMint.toBase58())
     
     return {
       marketId: extInfo.address.marketId.toBase58(),
@@ -61,7 +61,7 @@ export const createMarketOnly = async () => {
     }
 
   } catch (error) {
-    console.error('❌ Error:', error)
+    console.error(' Error:', error)
     throw error
   }
 }
@@ -69,14 +69,14 @@ export const createMarketOnly = async () => {
 // Execute
 createMarketOnly()
   .then((result) => {
-    console.log('\n🏁 SUCCESS! Market Created:')
+    console.log('\n SUCCESS! Market Created:')
     console.log('Market ID:', result.marketId)
     console.log('Transaction Hashes:', result.txHashes)
     console.log('Custom Token:', result.customToken)
-    console.log('\n📝 Next Steps:')
+    console.log('\n Next Steps:')
     console.log('1. Use this Market ID to create an AMM pool')
     console.log('2. Market ID:', result.marketId)
   })
   .catch((error) => {
-    console.error('❌ Failed to create market:', error.message || error)
+    console.error(' Failed to create market:', error.message || error)
   })

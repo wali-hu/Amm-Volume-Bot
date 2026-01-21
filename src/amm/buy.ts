@@ -3,7 +3,7 @@ import BN from 'bn.js'
 import Decimal from 'decimal.js'
 
 /**
- * BUY Script: Swap SOL → Custom Token
+ * BUY Script: Swap SOL  Custom Token
  * This script swaps SOL (base token) for custom tokens (quote token)
  */
 
@@ -12,23 +12,23 @@ const buyTokens = async () => {
   const poolId = 'DdsMQzVueB5L7Rn5hMkzSz2BFCnQyVXbnA5cMUimT92C'
   
   console.log(`
-╔════════════════════════════════════════════════════════════════╗
-║                    🛒 BUY TOKENS (SOL → Token)                ║
-╚════════════════════════════════════════════════════════════════╝
+
+                     BUY TOKENS (SOL  Token)                
+
   `)
   
   try {
     // Fetch pool data
-    console.log('📊 Fetching pool information...')
+    console.log(' Fetching pool information...')
     const poolData = await raydium.api.fetchPoolById({ ids: poolId })
     
     if (!poolData || poolData.length === 0) {
-      console.error('❌ Pool not found')
+      console.error(' Pool not found')
       return
     }
     
     const pool = poolData[0]
-    console.log('✅ Pool found!')
+    console.log(' Pool found!')
     console.log(`   Base Token: ${pool.mintA.symbol} (${pool.mintA.address})`)
     console.log(`   Quote Token: ${pool.mintB.symbol || 'Custom'} (${pool.mintB.address})`)
     
@@ -42,13 +42,13 @@ const buyTokens = async () => {
     const inputMint = pool.mintA.address // SOL
     
     console.log(`
-📈 Swap Details:
+ Swap Details:
    Input: 0.1 SOL
    Slippage: 5%
    `)
     
     // Calculate output
-    console.log('🔄 Computing swap amount...')
+    console.log(' Computing swap amount...')
     const { amountOut, minAmountOut, priceImpact } = raydium.liquidity.computeAmountOut({
       poolInfo,
       amountIn: inputAmount,
@@ -60,14 +60,14 @@ const buyTokens = async () => {
     const expectedTokens = new Decimal(amountOut.toString()).div(10 ** 6)
     const minTokens = new Decimal(minAmountOut.toString()).div(10 ** 6)
     
-    console.log(`✅ Computation Done:
+    console.log(` Computation Done:
    Expected Output: ${expectedTokens.toString()} tokens
    Min Output (5% slippage): ${minTokens.toString()} tokens
    Price Impact: ${priceImpact.toFixed(4)}%
     `)
     
     // Execute swap
-    console.log('💱 Creating swap instruction...')
+    console.log(' Creating swap instruction...')
     const { execute } = await raydium.liquidity.swap({
       poolInfo,
       poolKeys,
@@ -86,29 +86,29 @@ const buyTokens = async () => {
       },
     })
     
-    console.log('🚀 Executing transaction...\n')
+    console.log(' Executing transaction...\n')
     const { txId } = await execute({ sendAndConfirm: true })
     
     console.log(`
-╔════════════════════════════════════════════════════════════════╗
-║                      ✅ BUY SUCCESSFUL!                        ║
-╠════════════════════════════════════════════════════════════════╣
-║                                                                ║
-║  Transaction Hash:                                            ║
-║  ${txId}
-║                                                                ║
-║  You received: ~${minTokens.toString()} tokens                 ║
-║                                                                ║
-╚════════════════════════════════════════════════════════════════╝
+
+                       BUY SUCCESSFUL!                        
+
+                                                                
+  Transaction Hash:                                            
+  ${txId}
+                                                                
+  You received: ~${minTokens.toString()} tokens                 
+                                                                
+
     `)
     
     return txId
     
   } catch (error) {
     console.error(`
-╔════════════════════════════════════════════════════════════════╗
-║                    ❌ BUY FAILED!                              ║
-╚════════════════════════════════════════════════════════════════╝
+
+                     BUY FAILED!                              
+
     `)
     if (error instanceof Error) {
       console.error('Error:', error.message)
@@ -122,7 +122,7 @@ const buyTokens = async () => {
 buyTokens()
   .then((txHash) => {
     if (txHash) {
-      console.log('\n📋 Save this transaction hash for records!')
+      console.log('\n Save this transaction hash for records!')
     }
     process.exit(0)
   })

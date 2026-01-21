@@ -7,8 +7,8 @@ const getTxLogs = async () => {
     commitment: 'confirmed',
     maxSupportedTransactionVersion: 0
   })
-  console.log('📋 Transaction Error:', txDetails?.meta?.err)
-  console.log('📋 Log Messages:')
+  console.log(' Transaction Error:', txDetails?.meta?.err)
+  console.log(' Log Messages:')
   txDetails?.meta?.logMessages?.forEach((log, i) => {
     console.log(`${i}: ${log}`)
   })
